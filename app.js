@@ -16,7 +16,7 @@ app.engine('hbs', hbs.express3({
 }));
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3344);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.favicon());
@@ -33,6 +33,9 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/gallary/random', routes.random);
+app.get('/gallary', routes.gallary);
+app.get(/\/gallary\/(.*)/, routes.gallary);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

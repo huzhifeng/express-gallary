@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>我的相册</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="huzhifeng">
+    <meta name="description" content="相册">
+
+    <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-image-gallery.min.css">
+    <link rel="stylesheet" href="/stylesheets/blueimp-gallery-video.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/favicon.ico">
+  </head>
+  <body>
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="/gallary">我的相册</a></li>
+        {{#each menus}}
+        <li><a href="{{this.href}}">{{this.text}}</a></li>
+        {{/each}}
+      </ol>
+      <div calss="row-fluid">
+        <div class="col-md-2 sidebar">
+          <h2>我的相册:</h2>
+          <ul class="nav nav-tabs nav-stacked">
+            {{#each dirs}}
+            <li><a href="{{this.href}}">{{this.text}}</a></li>
+            {{/each}}
+            <li><a href="/gallary/random">随机看</a></li>
+          </ul>
+        </div>
+        <div class="col-md-10 main">
+          <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+          <div id="blueimp-gallery" class="blueimp-gallery">
+            <!-- The container for the modal slides -->
+            <div class="slides"></div>
+            <!-- Controls for the borderless lightbox -->
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="close">×</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+            <!-- The modal dialog, which will be used to wrap the lightbox content -->
+            <div class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body next"></div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left prev">
+                      <i class="glyphicon glyphicon-chevron-left"></i>
+                      Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                      Next
+                      <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="links">
+            {{#each imgs}}
+              <a href="{{this.href}}" title="{{this.text}}" data-gallery>
+                  <img src="{{this.thumbnail}}" alt="{{this.text}}" class="img-circle" style="width:240px;height:240px;margin:5px">
+              </a>
+            {{/each}}
+          </div>
+
+          {{#if videos}}
+          <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+          <div id="blueimp-video-carousel" class="blueimp-gallery blueimp-gallery-controls blueimp-gallery-carousel blueimp-gallery-display blueimp-gallery-playing">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="play-pause"></a>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    <div>
+
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="/javascripts/bootstrap-image-gallery.min.js"></script>
+    <script src="/javascripts/blueimp-gallery-video.js"></script>
+    {{#if videos}}
+    <script>
+    // Initialize the Gallery as video carousel:
+    blueimp.Gallery([
+      /*{
+        title: "Sintel",
+        href: "http://media.w3.org/2010/05/sintel/trailer.mp4",
+        type: "video/mp4",
+        poster: "http://media.w3.org/2010/05/sintel/poster.png"
+      },*/
+      {{#each videos}}
+      {
+        title: "{{this.title}}",
+        href: "{{this.href}}",
+        type: "{{this.type}}",
+        poster: "{{this.poster}}"
+      },
+      {{/each}}
+    ], {
+      container: "#blueimp-video-carousel",
+      carousel: true
+    });
+    </script>
+    {{/if}}
+  </body>
+</html>
